@@ -88,3 +88,4 @@ function selectElement(element, listItem) {
     listItem.classList.add('selected');
     selectedElement = element;
 }
+ 
