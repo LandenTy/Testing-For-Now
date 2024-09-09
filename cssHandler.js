@@ -28,21 +28,28 @@ export function handleCSSFileUpload(event) {
 }
 
 // Function to apply the combined CSS
+// Function to apply the combined CSS
 function applyCombinedCSS() {
     getExistingCSS().then(existingCSSContent => {
+        // Combine existing and new CSS
         const combinedCSS = existingCSSContent + '\n' + newCSSContent;
-        let styleElement = document.getElementById('combined-stylesheet');
-        
-        if (styleElement) {
-            styleElement.textContent = combinedCSS;
-        } else {
-            styleElement = document.createElement('style');
-            styleElement.id = 'combined-stylesheet';
-            styleElement.type = 'text/css';
-            styleElement.textContent = combinedCSS;
-            document.head.appendChild(styleElement);
+
+        // Remove any existing combined stylesheet
+        const existingStyleElement = document.getElementById('combined-stylesheet');
+        if (existingStyleElement) {
+            existingStyleElement.remove();
         }
+
+        // Create and append new style element
+        const styleElement = document.createElement('style');
+        styleElement.id = 'combined-stylesheet';
+        styleElement.type = 'text/css';
+        styleElement.textContent = combinedCSS;
+        document.head.appendChild(styleElement);
+
         console.log('Combined CSS applied:', combinedCSS);
+    }).catch(error => {
+        console.error('Error applying combined CSS:', error);
     });
 }
 
