@@ -1,19 +1,9 @@
 // cssHandler.js
-export let newCSSContent = '';
 
-export function handleCSSFileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            newCSSContent = e.target.result;
-            applyCombinedCSS();
-        };
-        reader.readAsText(file);
-    }
-}
+let newCSSContent = '';
 
-function getExistingCSS() {
+// Function to load existing CSS content
+export function getExistingCSS() {
     return fetch('styles.css')
         .then(response => response.text())
         .catch(error => {
@@ -22,14 +12,41 @@ function getExistingCSS() {
         });
 }
 
+// Handle CSS file upload
+export function handleCSSFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            newCSSContent = e.target.result;
+            console.log('New CSS content loaded:', newCSSContent);
+
+            applyCombinedCSS();
+        };
+        reader.readAsText(file);
+    }
+}
+
+// Function to apply the combined CSS
 function applyCombinedCSS() {
     getExistingCSS().then(existingCSSContent => {
         const combinedCSS = existingCSSContent + '\n' + newCSSContent;
-        const styleElement = document.getElementById('combined-stylesheet');
-        styleElement.textContent = combinedCSS;
+        let styleElement = document.getElementById('combined-stylesheet');
+        
+        if (styleElement) {
+            styleElement.textContent = combinedCSS;
+        } else {
+            styleElement = document.createElement('style');
+            styleElement.id = 'combined-stylesheet';
+            styleElement.type = 'text/css';
+            styleElement.textContent = combinedCSS;
+            document.head.appendChild(styleElement);
+        }
+        console.log('Combined CSS applied:', combinedCSS);
     });
 }
 
+// Function to save updated CSS
 export function saveUpdatedCSS() {
     getExistingCSS().then(existingCSSContent => {
         const combinedCSS = existingCSSContent + '\n' + newCSSContent;
@@ -45,5 +62,7 @@ export function saveUpdatedCSS() {
 
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+
+        console.log('Updated CSS file downloaded.');
     });
 }
