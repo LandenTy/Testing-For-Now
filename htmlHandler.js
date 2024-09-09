@@ -1,6 +1,4 @@
 // htmlHandler.js
-import { updateInspector } from './inspector.js';
-
 export function handleHTMLFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
