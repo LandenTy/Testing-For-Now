@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReStyle Editor</title>
     <link id="combined-stylesheet" rel="stylesheet" href="styles.css">
+    <script type="module" src="main.js" defer></script>
 </head>
 <body>
     <nav>
         <h1>ReStyle</h1>
         <button id="openModalBtn">Open Upload Menu</button>
         <button id="saveButton">Save Position</button>
+        <!-- Buttons for parent and unparent actions -->
+        <button id="parentButton">Parent</button>
+        <button id="unparentButton">Unparent</button>
     </nav>
 
     <!-- Modal Structure -->
@@ -42,10 +46,8 @@
             <li>Rotation: <input type="number" id="rotX" placeholder="x"> <input type="number" id="rotY" placeholder="y"></li>
         </ul>
     </div>    
-    
+
+    <!-- Container for HTML elements -->
     <div id="container"></div>
-    
-    <!-- Main JavaScript Module -->
-    <script type="module" src="main.js" defer></script>
 </body>
 </html>
