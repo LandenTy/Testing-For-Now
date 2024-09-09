@@ -1,7 +1,13 @@
 // hierarchy.js
+
+let selectedElement = null;
+let draggedElement = null;
+
 export function setupHierarchyListeners() {
     const hierarchyList = document.getElementById('hierarchyList');
-    
+    const parentButton = document.getElementById('parentButton');
+    const unparentButton = document.getElementById('unparentButton');
+
     if (!hierarchyList) {
         console.error('Element with ID "hierarchyList" not found!');
         return;
@@ -19,6 +25,31 @@ export function setupHierarchyListeners() {
             }
         }
     });
+
+    if (parentButton) {
+        parentButton.addEventListener('click', () => {
+            if (selectedElement && draggedElement) {
+                selectedElement.appendChild(draggedElement);
+                updateHierarchyPanel(document.body);
+            }
+        });
+    } else {
+        console.error('Element with ID "parentButton" not found!');
+    }
+
+    if (unparentButton) {
+        unparentButton.addEventListener('click', () => {
+            if (draggedElement) {
+                const container = document.getElementById('container');
+                if (container && !container.contains(draggedElement)) {
+                    container.appendChild(draggedElement);
+                    updateHierarchyPanel(document.body);
+                }
+            }
+        });
+    } else {
+        console.error('Element with ID "unparentButton" not found!');
+    }
 }
 
 function updateHierarchyPanel(rootNode) {
@@ -55,4 +86,8 @@ function updateHierarchyPanel(rootNode) {
     createHierarchyItems(rootNode, hierarchyList);
 }
 
-export { updateHierarchyPanel };
+export { updateHierarchyPanel, setSelectedElement };
+
+function setSelectedElement(element) {
+    selectedElement = element;
+}
