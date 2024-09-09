@@ -4,6 +4,8 @@ import { handleCSSFileUpload, saveUpdatedCSS } from './cssHandler.js';
 import { makeElementsDraggable } from './dragDrop.js';
 import { setupHierarchyListeners } from './hierarchy.js';
 import { setupInspectorListeners } from './inspector.js';
+import { setupHtmlHandlerListeners } from './htmlHandler.js';
+import { setupInspectorListeners } from './inspector.js';
 
 // Setup event listeners for file inputs and buttons
 document.getElementById('htmlInput').addEventListener('change', handleHTMLFileUpload);
@@ -14,6 +16,8 @@ document.getElementById('saveButton').addEventListener('click', saveUpdatedCSS);
 setupInspectorListeners();
 makeElementsDraggable();
 setupHierarchyListeners();
+setupHtmlHandlerListeners();
+setupInspectorListeners();
 
 // Modal functionality
 const openModalBtn = document.getElementById('openModalBtn');
